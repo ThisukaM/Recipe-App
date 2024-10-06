@@ -10,7 +10,7 @@ export default function Header() {
         href="/"
         passHref
         className="text-4xl font-bold text-purple-700 cursor-pointer">
-        
+  
           MEALMATCH
         
       </Link>
