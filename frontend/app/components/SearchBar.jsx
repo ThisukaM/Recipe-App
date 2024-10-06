@@ -106,8 +106,8 @@ export default function SearchBar() {
             <div className="flex items-center justify-center rounded-md overflow-hidden w-full">
               <input
                 type="text"
-                className={`self-center w-[60%] rounded-l-md border-2 p-2 ${inputError ? 'border-red-500' : 'border-black'}`}
-                placeholder="Enter Recipe name or ingredients..."
+                className={`self-center md:w-full w-[60%] rounded-l-md border-2 p-2 ${inputError ? 'border-red-500' : 'border-black'}`}
+                placeholder="Enter ingredients..."
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
               />
