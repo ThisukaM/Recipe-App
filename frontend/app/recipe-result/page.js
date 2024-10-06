@@ -1,40 +1,48 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Divider } from "@nextui-org/react";
 import RecipeImage from './RecipeImage';
 import Ingredients from './Ingredients';
 import RecipeHeader from './RecipeHeader';
 import RecipeInstructions from './RecipeInstructions';
+import { useRouter, useSearchParams } from 'next/navigation';
 
+// http:localhost:3000/recipe-result
 export default function RecipePage() {
-    const [recipe, setRecipe] = useState({
-        title: "Chocolate Chip Cookies",
-        ingredients: `1 cup all-purpose flour
-        1/2 cup granulated sugar
-        1/4 cup unsalted butter, softened
-        1 pinch of salt
-        1 cup chocolate chips
-        1/2 tsp baking powder
-        1/4 cup brown sugar
-        1 tsp vanilla extract
-        1/2 tsp baking soda
-        1 large egg`,
-        cookingTime: 25,
-        instructions: `1. Preheat the oven to 350°F (175°C) and grease a 9-inch round cake pan or line it with parchment paper.
-        2. In a medium bowl, whisk together the flour, baking powder, and salt.
-        3. In a large bowl, cream the butter and sugar together until light and fluffy.
-        4. Beat in the egg, one at a time, then add the vanilla extract.
-        5. Gradually add the dry ingredients to the butter mixture, alternating with the milk. Mix until just combined.
-        6. Fold in the chocolate chips, if using.
-        7. Pour the batter into the prepared pan and smooth the top with a spatula.
-        8. Put in the oven on bake for 25 minutes.
-        9. Serve with whipped cream and enjoy!
-        10. Testing overflow
-        11. Testing overflow
-        12. Testing overflow`,
-        recipeImage: "/cookie.jpg",
-    });
+    const [recipe, setRecipe] = useState(null);
+    const searchParams = useSearchParams();
+
+    // get specific recipe from backend
+    useEffect(() => {
+        const resultId = searchParams.get('result-id');
+        if (resultId) {
+            const fetchRecipe = async () => {
+                try {
+                    const response = await fetch(`http://localhost:5000/api/server/generated-recipes/${resultId}`);
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.statusText}`);
+                    }
+                    const recipeData = await response.json();
+
+                    // Remove quotes from the recipeImage field
+                    if (recipeData.recipeImage) {
+                        recipeData.recipeImage = recipeData.recipeImage.replace(/^["'](.+)["']$/g, '$1');
+                    }
+
+                    setRecipe(recipeData);
+                } catch (error) {
+                    console.error("Failed to fetch recipe data:", error);
+                }
+            };
+
+            fetchRecipe();
+        }
+    }, [searchParams]);
+
+    if (!recipe) {
+        return <p>Loading...</p>;
+    }
 
     const handleSaveRecipe = () => {
         console.log("Recipe saved!");
@@ -44,13 +52,13 @@ export default function RecipePage() {
         <div style={styles.pageContainer}>
             <Card style={styles.recipeContainer}>
                 <div style={styles.leftSide}>
-                    <RecipeImage src={recipe.recipeImage} alt="Cookie" />
-                    <Ingredients ingredients={recipe.ingredients} />
+                    <RecipeImage src={recipe.recipeImage} alt="Recipe Image" />
+                    <Ingredients ingredients={recipe.detailedIngredients} />
                 </div>
                 <div style={styles.rightSide}>
                     <RecipeHeader title={recipe.title} onSave={handleSaveRecipe} />
                     <Divider />
-                    <RecipeInstructions instructions={recipe.instructions} />
+                    <RecipeInstructions instructions={recipe.instructions} cookingTime={recipe.cookingTime} />
                 </div>
             </Card>
         </div>
@@ -64,7 +72,8 @@ const styles = {
         alignItems: 'center',
         minHeight: '100vh',
         backgroundColor: 'white',
-        paddingTop: '100px'
+        paddingTop: '100px',
+        marginTop: '-130px'
     },
     recipeContainer: {
         display: 'grid',
@@ -76,6 +85,7 @@ const styles = {
         borderRadius: '12px',
         padding: '10px',
         height: '70vh',
+        border: '2px solid #6D28D9'
     },
     leftSide: {
         display: 'flex',

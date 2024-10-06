@@ -3,6 +3,7 @@ const Recipe = require('../models/recipeModel')
 const { generateRecipe } = require('../server/api/gemini/client');
 const { getImageByTitle } = require('../server/api/pexels/client');
 const db = require('../server/db');
+const { ObjectId } = require('mongodb')
 
 
 const router = express.Router()
@@ -80,42 +81,36 @@ router.patch('/:id', (req, res) => {
     res.json({ message: 'Update a recipe'})
 })
 
-// generating recipe using Gemini API
-router.post('/generate', async (req, res) => {
-    const { ingredients, cuisine, dietaryPreferences, mealType, servings } = req.body;
+// generating image using Pexels API (TRIED BUT NOT WORKING)
+router.post('/generate-image', async (req, res) => {
+    const { title, ingredients, detailedIngredients, cookingTime, instructions, recipeImage, tags, resultId } = req.body;
 
-    const params = {
+    const recipe = {
+        title: title,
         ingredients: ingredients,
-        cuisine: cuisine,
-        dietaryPreferences: dietaryPreferences,
-        mealType: mealType,
-        servings: servings
-    };
-    console.log('Params:', params);
-    
+        detailedIngredients: detailedIngredients,
+        cookingTime: cookingTime,
+        instructions: instructions,
+        recipeImage: recipeImage,
+        tags: tags,
+        resultId : resultId
+    }
     try {
-        const recipeData = await generateRecipe(params);
-        // remove the ```json``` and newline characters from the response
-        const cleanedData = recipeData.replace(/```json|```|\n/g, '');
-        let parsedData = JSON.parse(cleanedData);
+        if (!title) {
+            throw new Error('Recipe title is missing');
+        }
 
+        // get generated image
+        recipe.recipeImage= await getImageByTitle(recipe.title || '/cookie.jpg');
+        res.json(recipe.recipeImage);
 
-        // Add the image URL to the response
-        const recipeImage = await getImageByTitle(parsedData.recipeImage);
-        console.log('Recipe Image:', recipeImage);
-        parsedData.recipeImage = recipeImage;
-
-        console.log('Parsed Data:', parsedData);
-        res.json(parsedData);
-
-
-        
     } catch (error) {
-        res.status(500).json({ error: 'Failed to generate recipe' });
+        console.error('Error generating recipe image:', error.message);
+        res.status(500).json({ error: error.message });
     }
 });
 
-router.post('/only', async (req, res) => {
+router.post('/generate-recipes', async (req, res) => {
     const { ingredients, cuisine, dietaryPreferences, mealType, servings } = req.body;
 
     const params = {
@@ -125,8 +120,7 @@ router.post('/only', async (req, res) => {
         mealType: mealType,
         servings: servings
     };
-    console.log('Params:', params);
-    
+
     try {
         const recipeData = await generateRecipe(params);
         const cleanedData = recipeData.replace(/```json|```|\n/g, '');
@@ -139,3 +133,4 @@ router.post('/only', async (req, res) => {
 });
 
 module.exports = router
+

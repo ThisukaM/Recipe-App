@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { useRouter } from 'next/navigation';
 import DropDown from './DropDown';
 import { generateRecipe } from '../lib/api';
@@ -12,6 +12,7 @@ export default function SearchBar() {
   const [cuisine, setCuisine] = useState('Any');
   const [loading, setLoading] = useState(false);
   const [inputError, setInputError] = useState(false); // State to track input error
+  const [loadingMessage, setLoadingMessage] = useState('Loading recipes, please wait');
 
   const router = useRouter();
 
@@ -28,34 +29,67 @@ export default function SearchBar() {
     if (label === 'Cuisine') setCuisine(option);
   };
 
+  useEffect(() => {
+    let timer;
+    if (loading) {
+      const messages = ['Loading recipes, please wait', 'Loading recipes, please wait.', 'Loading recipes, please wait..', 'Loading recipes, please wait...'];
+      let index = 0;
+      timer = setInterval(() => {
+        setLoadingMessage(messages[index]);
+        index = (index + 1) % messages.length;
+      }, 500); // Update message every 500ms
+    } else {
+      setLoadingMessage('Loading recipes, please wait');
+    }
+
+    return () => clearInterval(timer);
+  }, [loading]);
   const handleSearch = async (e) => {
     e.preventDefault();
 
     if (!query.trim()) {
-      // If input is empty, show error and stop submission
       setInputError(true);
       return;
     }
-
     const ingredients = query;
     const selectedCuisine = cuisine;
     const selectedMealType = mealType;
-    const selectedServingSize = servingSize; 
+    const selectedServingSize = servingSize;
     const dietaryPreferences = 'none';
 
-    setLoading(true); // Set loading to true when the search starts
+    setLoading(true);
 
     try {
+
+      // call gemini to get recipes
       const data = await generateRecipe(ingredients, selectedCuisine, dietaryPreferences, selectedMealType, selectedServingSize);
-      console.log('API Response:', data);
-    
-      router.push(`/result?data=${encodeURIComponent(JSON.stringify(data))}`);
+
+      // clear generated recipes in backend | have to call this after the api call otherwise no recipe data is shown
+      await fetch('http://localhost:5000/api/server/generated-recipes', {
+        method: 'DELETE',
+      });
+
+      // store generated recipes in backend
+      const response = await fetch('http://localhost:5000/api/server/generated-recipes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ recipes: data })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      router.push('/result');
     } catch (error) {
-      console.error('Error fetching the recipe:', error);
+      console.error('Error fetching or storing the recipe:', error);
     } finally {
       setLoading(false);
     }
   };
+
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -82,7 +116,7 @@ export default function SearchBar() {
                 className="bg-black text-white px-6 text-lg font-semibold py-2 rounded-r-md"
                 disabled={loading}
               >
-                {loading ? 'Loading...' : 'Go'}
+                {loading ? 'Loading' : 'Go'}
               </button>
             </div>
           </div>
@@ -108,7 +142,7 @@ export default function SearchBar() {
       </div>
 
       {loading && (
-        <div className="mt-4 text-gray-600">Loading recipes, please wait...</div>
+        <div className="mt-4 text-gray-600">{loadingMessage}</div>
       )}
     </div>
   );
