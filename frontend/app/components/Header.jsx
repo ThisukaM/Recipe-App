@@ -16,7 +16,7 @@ export default function Header() {
       </Link>
       <div className="flex space-x-4">
         <Button color="primary" variant="ghost" size="lg">
-          Saved Recipe
+          Saved Recipes
         </Button>
         <Button color="primary" variant="ghost" size="lg">
           About
