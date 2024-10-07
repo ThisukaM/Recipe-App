@@ -9,12 +9,17 @@ export default function Header() {
       <Link
         href="/"
         passHref
-        className="text-4xl font-bold text-purple-700 cursor-pointer">
+        className="text-xl md:text-4xl font-bold text-purple-700 cursor-pointer">
   
           MEALMATCH
         
       </Link>
-      <div className="flex space-x-4">
+      <div className="inline-block cursor-pointer md:hidden">
+        <div className="w-8 h-1 bg-purple-700 my-1.5"></div>
+        <div className="w-8 h-1 bg-purple-700 my-1.5"></div>
+        <div className="w-8 h-1 bg-purple-700 my-1.5"></div>
+      </div>
+      <div className="space-x-4 hidden md:block">
         <Button color="primary" variant="ghost" size="lg">
           Saved Recipes
         </Button>
