@@ -10,6 +10,7 @@ export default function SearchBar() {
   const [mealType, setMealType] = useState('Any');
   const [servingSize, setServingSize] = useState('Any');
   const [cuisine, setCuisine] = useState('Any');
+  const [dietaryRestriction, setDietaryRestriction] = useState('None');
   const [loading, setLoading] = useState(false);
   const [inputError, setInputError] = useState(false); // State to track input error
   const [loadingMessage, setLoadingMessage] = useState('Loading recipes, please wait');
@@ -27,6 +28,7 @@ export default function SearchBar() {
     if (label === 'Meal Type') setMealType(option);
     if (label === 'Serving Size') setServingSize(option);
     if (label === 'Cuisine') setCuisine(option);
+    if (label === 'Dietary Restriction') setDietaryRestriction(option);
   };
 
   useEffect(() => {
@@ -55,14 +57,14 @@ export default function SearchBar() {
     const selectedCuisine = cuisine;
     const selectedMealType = mealType;
     const selectedServingSize = servingSize;
-    const dietaryPreferences = 'none';
+    const selectedDietaryRestriction = dietaryRestriction !== 'None' ? dietaryRestriction : '';
 
     setLoading(true);
 
     try {
 
       // call gemini to get recipes
-      const data = await generateRecipe(ingredients, selectedCuisine, dietaryPreferences, selectedMealType, selectedServingSize);
+      const data = await generateRecipe(ingredients, selectedCuisine, selectedDietaryRestriction, selectedMealType, selectedServingSize);
 
       // clear generated recipes in backend | have to call this after the api call otherwise no recipe data is shown
       await fetch('http://localhost:5000/api/server/generated-recipes', {
@@ -138,6 +140,11 @@ export default function SearchBar() {
           label="Cuisine"
           options={["Italian", "Indian", "French", "Spanish", "Any"]}
           onSelect={(option) => handleDropDownSelect('Cuisine', option)}
+        />
+        <DropDown
+          label="Dietary Restriction"
+          options={["Vegan", "Vegetarian", "Halal", "Gluten-Free", "Lactose Intolerant", "Food allergies", "None"]}
+          onSelect={(option) => handleDropDownSelect('Dietary Restriction', option)}
         />
       </div>
 
