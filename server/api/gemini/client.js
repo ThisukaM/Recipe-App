@@ -20,7 +20,7 @@ const generateRecipe = async (params) => {
             "4. Fully detailed Step-by-Step Cooking Instructions. " +
             "5. Cooking Time. " +
             "6. Number of Servings. " +
-            "7. Tags related to the dish (eg: spicy, healthy). " +
+            "7. Tags related to the dish (eg: any dietary restriction, meal type, cuisine, spicy, healthy, preparation difficulty, etc). " +
             "8. Name of image (this must be a 1-2 word description with any space characters replaced by '-') from the following prompts: " +
             JSON.stringify(params) +
             "Prioritise the following (in order of most important to least important): " +
