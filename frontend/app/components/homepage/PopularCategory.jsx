@@ -72,7 +72,7 @@ const PopularCategories = () => {
         {categories.map((category) => (
           <button
             key={category.title} // Use a unique key
-            className="flex flex-col items-center md:p-2 p-5 border border-transparent rounded-md shadow-lg cursor-pointer hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="flex flex-col items-center md:p-2 p-5 border border-transparent rounded-md shadow-lg cursor-pointer duration-200 hover:bg-gray-100 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-purple-500"
             onClick={() => handleCategoryClick(category)}
             aria-label={`Select ${category.title} category`}
           >

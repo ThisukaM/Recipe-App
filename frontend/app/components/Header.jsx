@@ -27,7 +27,7 @@ export default function Header() {
             MEALMATCH
         
         </Link> 
-        <button id="hamburger-button" className={`inline-block cursor-pointer md:block ${isMenuOpen ? 'change' : ''}`} onClick={hamburgerClick}>
+        <button id="hamburger-button" className={`inline-block cursor-pointer md:hidden ${isMenuOpen ? 'change' : ''}`} onClick={hamburgerClick}>
           <div className="bar1"></div>
           <div className="bar2"></div>
           <div className="bar3"></div>
