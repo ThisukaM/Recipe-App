@@ -67,7 +67,7 @@ const PopularCategories = () => {
 
   return (
     <div className="text-center mt-12">
-      <h2 className="text-3xl font-bold mb-8">Popular Categories</h2>
+      <h2 className="text-3xl font-bold mb-8 text-black">Popular Categories</h2>
       <div className="flex flex-wrap justify-center gap-8">
         {categories.map((category) => (
           <button
@@ -76,7 +76,7 @@ const PopularCategories = () => {
             onClick={() => handleCategoryClick(category)}
             aria-label={`Select ${category.title} category`}
           >
-            <div className="w-24 h-24 rounded-full overflow-hidden shadow-lg">
+            <div className="w-24 h-24 rounded-full overflow-hidden shadow-lg text-black">
               <Image
                 src={category.img}
                 alt={category.title}
@@ -85,7 +85,7 @@ const PopularCategories = () => {
                 className="object-cover w-full h-full"
               />
             </div>
-            <p className="mt-4 text-lg font-medium">{category.title}</p>
+            <p className="mt-4 text-lg font-medium text-black">{category.title}</p>
           </button>
         ))}
       </div>
