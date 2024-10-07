@@ -9,6 +9,7 @@ const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
 const generateRecipe = async (params) => {
     try {
+        const { ingredients, cuisine, dietaryRestriction, mealType, servings } = params;
 
         const prompt = "You are a recipe generator. Generate five to ten recipes with the following details: " +
             "1. Recipe Name. " +
@@ -22,6 +23,10 @@ const generateRecipe = async (params) => {
             "7. Tags related to the dish (eg: spicy, healthy). " +
             "8. Name of image (this must be a 1-2 word description with any space characters replaced by '-') from the following prompts: " +
             JSON.stringify(params) +
+            "Prioritise the following (in order of most important to least important): " +
+            "1. Dietary Restriction: ${dietaryRestriction}. If a specific dietary restriction is selected, ensure the recipe adheres to this dietary preference. " +
+            "2. Meal Type: ${mealType}. If a specific meal type is selected, ensure the recipe will be suitable for this meal. " +
+            "3. Cuisine: ${cuisine}. If a specific cuisine is selected, ensure the recipe is aligned with this cuisine. " +
             "Format the response as a JSON object with fields: 'title', 'ingredients', 'detailedIngredients' , 'cookingTime', 'instructions', 'recipeImage','tags'. " +
             "Your response must only be in these json fields with no other information. " +
             "IMPORTANT: Do not include any offensive, harmful, or inappropriate content in the recipes or instructions. " +
