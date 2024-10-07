@@ -57,7 +57,7 @@ export default function SearchBar() {
     const selectedCuisine = cuisine;
     const selectedMealType = mealType;
     const selectedServingSize = servingSize;
-    const selectedDietaryRestriction = dietaryRestriction !== 'None' ? dietaryRestriction : '';
+    const selectedDietaryRestriction = dietaryRestriction;
 
     setLoading(true);
 
