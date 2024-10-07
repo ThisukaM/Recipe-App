@@ -22,7 +22,9 @@ const generateRecipe = async (params) => {
             "8. Name of image (this must be a 1-2 word description with any space characters replaced by '-') from the following prompts:" +
             JSON.stringify(params) +
             "Format the response as a JSON object with fields: 'title', 'ingredients', 'detailedIngredients' , 'cookingTime', 'instructions', 'recipeImage','tags'. " +
-            "Your response must only be in these json fields with no other information";
+            "Your response must only be in these json fields with no other information" +
+            "IMPORTANT NOTE: Do not include any offensive, harmful, or inappropriate content in the recipes or instructions. " +
+            "Reject any prompt that contains inappropriate language, and do not generate any results for such prompts.";
 
         const result = await model.generateContent(prompt);
         const response = await result.response;
