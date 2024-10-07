@@ -2,12 +2,14 @@
 
 import Link from 'next/link';
 import './header.css';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 export default function Header() {
   const savedOptionRef = useRef(null);
   const aboutOptionRef = useRef(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const hamburgerClick = () => {
+    setIsMenuOpen(prev => !prev); 
     if (savedOptionRef.current && aboutOptionRef.current) {
       savedOptionRef.current.style.display = savedOptionRef.current.style.display === "block" ? "none" : "block";
       aboutOptionRef.current.style.display = aboutOptionRef.current.style.display === "block" ? "none" : "block";
@@ -24,11 +26,11 @@ export default function Header() {
   
             MEALMATCH
         
-        </Link>
-        <button id="hamburger-button" className="inline-block cursor-pointer md:block" onClick={hamburgerClick}>
-          <div className="w-8 h-1 bg-white my-1.5"></div>
-          <div className="w-8 h-1 bg-white my-1.5"></div>
-          <div className="w-8 h-1 bg-white my-1.5"></div>
+        </Link> 
+        <button id="hamburger-button" className={`inline-block cursor-pointer md:block ${isMenuOpen ? 'change' : ''}`} onClick={hamburgerClick}>
+          <div className="bar1"></div>
+          <div className="bar2"></div>
+          <div className="bar3"></div>
         </button>
         <div className="space-x-4 hidden md:block">
           <button className="bg-purple-700 px-5 py-2.5 border-2 border-color-white text-white rounded-xl hover:bg-white hover:text-purple-700">
