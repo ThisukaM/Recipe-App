@@ -125,7 +125,7 @@ export default function SearchBar() {
         </form>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-4 mb-4 w-full max-w-xl">
+      <div className="flex flex-wrap justify-center gap-4 mb-4 w-full max-w-2xl">
         <DropDown
           label="Meal Type"
           options={["Breakfast", "Lunch", "Dinner", "Any"]}
