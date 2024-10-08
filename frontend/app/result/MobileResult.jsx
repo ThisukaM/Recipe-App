@@ -23,10 +23,7 @@ const MobileResult = ({recipe, onButtonClick}) => {
                         {Array.isArray(recipe.ingredients) ? recipe.ingredients.join(", ") : "N/A"}
                     </p>
                     <div className="relative flex items-center gap-2">
-                        <button
-                            className="bg-green-500 py-2 px-3 rounded-lg text-md"
-                            onClick={onButtonClick}
-                        >
+                        <button className="bg-green-500 py-2 px-3 rounded-lg text-md" onClick={onButtonClick}>
                             View
                         </button>
                     </div>
