@@ -110,6 +110,7 @@ export default function SearchBar() {
                 placeholder="Enter ingredients..."
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
+                style={{color: 'black'}}
               />
               <button
                 type="submit"
