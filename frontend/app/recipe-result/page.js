@@ -7,6 +7,7 @@ import Ingredients from './Ingredients';
 import RecipeHeader from './RecipeHeader';
 import RecipeInstructions from './RecipeInstructions';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Share from './Share';
 
 // http:localhost:3000/recipe-result
 export default function RecipePage() {
@@ -48,6 +49,8 @@ export default function RecipePage() {
         console.log("Recipe saved!");
     };
 
+    
+
     return (
         <div style={styles.pageContainer}>
             <Card style={styles.recipeContainer}>
@@ -60,8 +63,12 @@ export default function RecipePage() {
                     <Divider />
                     <RecipeInstructions instructions={recipe.instructions} cookingTime={recipe.cookingTime} />
                 </div>
+                <div>
+                    <Share instructions={recipe.instructions} ingredients={recipe.detailedIngredients} />
+                </div>
             </Card>
         </div>
+        
     );
 }
 
