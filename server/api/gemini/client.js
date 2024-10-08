@@ -15,7 +15,7 @@ const generateRecipe = async (params) => {
             "1. Recipe Name. " +
             "2. List of Ingredients (without portion sizes). IMPORTANT: Do not include any non-food items or any " +
             "inedible objects in the ingredients list. Only generate recipes with actual food items. " +
-            "3. Detailed list of ingredients (with portion sizes). For any ingredient that has common alternatives, " +
+            "3. Detailed list of ingredients (with portion sizes). For all ingredient that have common alternatives, " +
             "suggest one or two substitutions with their equivalent amounts (eg: 'olive oil' can be substituted with 'sunflower oil' or 'butter', and provide appropriate amounts). " +
             "4. Fully detailed Step-by-Step Cooking Instructions. " +
             "5. Cooking Time. " +
