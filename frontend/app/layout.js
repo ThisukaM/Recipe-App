@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
           <div className="bg-white">
             <Header />
             <div>
-              <SearchBar />
+              <SearchBar/>
             </div>
             {children}
           </div>
