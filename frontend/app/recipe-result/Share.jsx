@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardBody } from "@nextui-org/react";
 
-export default function Share({ instructions, ingredients }) {
+export default function Share({ instructions, ingredients, title }) {
     const instructionList = Array.isArray(instructions) ? instructions : [];
     const ingredientsList = Array.isArray(ingredients) ? ingredients : [];
 
@@ -17,7 +17,7 @@ export default function Share({ instructions, ingredients }) {
         instructionsString = instructionsString.concat((i+1) + ". " + instructionList[i] + "\n")
     }
 
-    const emailLink = `mailto:?body=${encodeURIComponent(instructionsString)}`;
+    const emailLink = `mailto:?subject=${encodeURIComponent(title + " Recipe")} &body=${encodeURIComponent(instructionsString)}`;
     return (
            <h4><a href={emailLink} target="_blank">Send an email!</a></h4>
     );
