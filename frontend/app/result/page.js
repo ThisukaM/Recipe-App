@@ -188,10 +188,8 @@ export default function App() {
             {recipeData.map((recipe) => (
                 <MobileResult
                     key={recipe['result-id']}
-                    title={recipe.title}
-                    cookingTime={recipe.cookingTime}
-                    ingredients={recipe.ingredients}
-                    tags={recipe.tags}
+                    recipe={recipe}
+                    onButtonClick={() => handleViewButtonClick(recipe)}
                 />
             ))}
         </div>

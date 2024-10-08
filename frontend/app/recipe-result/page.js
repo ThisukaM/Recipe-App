@@ -122,7 +122,7 @@ export default function RecipePage() {
                         <div className="flex items-center justify-center w-[70%] mx-auto">
                             <RecipeImage src={recipe.recipeImage} alt="Recipe Image" className="object-cover w-full h-auto max-w-full"/>
                         </div>
-                        <div className="flex items-center justify-center w-[94%] mx-auto">
+                        <div className="flex items-center justify-center w-full mx-auto">
                             <Ingredients ingredients={recipe.detailedIngredients} />
                         </div>
                         <RecipeInstructions instructions={recipe.instructions} cookingTime={recipe.cookingTime} />
