@@ -67,7 +67,7 @@ const PopularCategories = () => {
 
   return (
     <div className="text-center mt-12">
-      <h2 className="text-3xl font-bold mb-8">Popular Categories</h2>
+      <h2 className="text-3xl font-bold mb-8 text-black">Popular Categories</h2>
       <div className="flex flex-wrap justify-center gap-8">
         {categories.map((category) => (
           <button
