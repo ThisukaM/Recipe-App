@@ -85,7 +85,7 @@ const PopularCategories = () => {
                 className="object-cover w-full h-full"
               />
             </div>
-            <p className="mt-4 text-2xl md:text-lg font-medium">{category.title}</p>
+            <p className="mt-4 text-2xl md:text-lg font-medium text-black">{category.title}</p>
           </button>
         ))}
       </div>
