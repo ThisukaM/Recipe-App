@@ -64,7 +64,7 @@ export default function RecipePage() {
                     <RecipeInstructions instructions={recipe.instructions} cookingTime={recipe.cookingTime} />
                 </div>
                 <div>
-                    <Share instructions={recipe.instructions} ingredients={recipe.detailedIngredients} title={recipe.title} />
+                    <Share instructions={recipe.instructions} ingredients={recipe.detailedIngredients} title={recipe.title} recipeId={searchParams.get('result-id')} />
                 </div>
             </Card>
         </div>
