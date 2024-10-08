@@ -112,6 +112,9 @@ export default function RecipePage() {
                         <Divider />
                         <RecipeInstructions instructions={recipe.instructions} cookingTime={recipe.cookingTime} />
                     </div>   
+                    <div>
+                    <Share instructions={recipe.instructions} ingredients={recipe.detailedIngredients} title={recipe.title} recipeId={searchParams.get('result-id')} />
+                </div>
                 </Card>
             </div>
             <div style={styles.mobileView}>
@@ -127,9 +130,6 @@ export default function RecipePage() {
                         </div>
                         <RecipeInstructions instructions={recipe.instructions} cookingTime={recipe.cookingTime} />
                     </Card>
-                </div>
-                <div>
-                    <Share instructions={recipe.instructions} ingredients={recipe.detailedIngredients} title={recipe.title} recipeId={searchParams.get('result-id')} />
                 </div>
         </div>
         </div>
