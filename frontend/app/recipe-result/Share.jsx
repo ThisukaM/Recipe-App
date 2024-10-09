@@ -2,23 +2,23 @@ import { CardBody } from "@nextui-org/react";
 
 export default function Share({ instructions, ingredients, title, recipeId }) {
 
-    
+    // Checks if the input is a valid array
     const instructionList = Array.isArray(instructions) ? instructions : [];
     const ingredientsList = Array.isArray(ingredients) ? ingredients : [];
 
     let instructionsString ="Ingredients: \n";
     let tweetString = "";
 
+    // Place ingredients in final string
     for(const element of ingredientsList){
         instructionsString = instructionsString.concat("- " + element + "\n")
     }
     instructionsString = instructionsString.concat("\n Cooking Instructions: \n")
 
+    // Place instructions in final string
     for(let i = 0; i<instructionList.length;i++){
         instructionsString = instructionsString.concat((i+1) + ". " + instructionList[i] + "\n")
     }
-
-    console.log("LOL " + tweetString);
 
     const emailLink = `mailto:?subject=${encodeURIComponent(title + " Recipe")} &body=${encodeURIComponent(instructionsString)}`;
     const twitterLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(instructionsString)}`;
