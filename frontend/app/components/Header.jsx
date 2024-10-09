@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import './header.css';
-import { useRef, useState, useContext } from 'react';
+import { useRef, useState, useContext, useEffect } from 'react';
 import LoginModal from './LoginModal';
 import { AuthContext } from '../contexts/AuthContext';
 import { useRouter } from 'next/navigation';
@@ -15,6 +15,22 @@ export default function Header() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const { user, setUser } = useContext(AuthContext);
   const router = useRouter();
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const savedMode = localStorage.getItem("darkMode") === "true";
+    setDarkMode(savedMode);
+    document.body.classList.toggle("dark", savedMode);
+  }, []);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => {
+      const newMode = !prev;
+      document.body.classList.toggle("dark", newMode);
+      localStorage.setItem("darkMode", newMode);
+      return newMode;
+    });
+  };
 
 
   const hamburgerClick = () => {
@@ -72,6 +88,12 @@ export default function Header() {
           <div className="bar2"></div>
           <div className="bar3"></div>
         </button>
+        <button 
+        onClick={toggleDarkMode} 
+        className="p-2 border rounded"
+      >
+        {darkMode ? 'Light Mode' : 'Dark Mode'}
+      </button>
         <div className="space-x-4 hidden md:block">
           {/* Updated Saved Recipes button */}
           <button

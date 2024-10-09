@@ -822,10 +822,10 @@ const FeaturedToday = () => {
 
   return (
       <section className="mt-12">
-        <h2 className="text-3xl font-bold text-center mb-8 text-black">
+        <h2 className="text-3xl font-bold text-center mb-8 text-black dark:text-white">
           Featured Today
         </h2>
-        <div className="flex justify-center gap-6 flex-wrap">
+        <div className="flex justify-center gap-6 flex-wrap dark:text-white">
           {recipesToShow.map((recipe, index) => (
               <RecipeCard
                   key={index}
